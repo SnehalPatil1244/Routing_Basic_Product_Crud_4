@@ -11,11 +11,12 @@ import { UserFormComponent } from './shared/components/user-form/user-form.compo
 import { FairsdashBoardComponent } from './shared/components/fairsdash-board/fairsdash-board.component';
 import { FairsDetailsComponent } from './shared/components/fairs-details/fairs-details.component';
 import { HomepageComponent } from './shared/components/homepage/homepage.component';
+import { AuthComponent } from './shared/components/auth/auth.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: HomepageComponent
+    component: AuthComponent
   },
   {
     path: 'home',

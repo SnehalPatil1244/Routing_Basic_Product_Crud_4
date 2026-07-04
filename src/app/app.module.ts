@@ -26,6 +26,7 @@ import { FairsDetailsComponent } from './shared/components/fairs-details/fairs-d
 import { FairsdashBoardComponent } from './shared/components/fairsdash-board/fairsdash-board.component';
 import { HomepageComponent } from './shared/components/homepage/homepage.component';
 import { AuthComponent } from './shared/components/auth/auth.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -58,7 +59,9 @@ import { AuthComponent } from './shared/components/auth/auth.component';
     MatDialogModule,
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
