@@ -11,15 +11,22 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./nav-bar.component.scss']
 })
 export class NavBarComponent implements OnInit {
-
+  userRole !: string
   constructor(private productservice: ProductService,
     private userservice: UserService,
     private fairsservice: FairsService,
-    private authservie : AuthService,
+    private authservie: AuthService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
+    this.userRole = this.authservie.getUserRole()!
+    this.authservie.isLoging$.subscribe({
+      next: res => {
+        this.userRole = res
+      }
+
+    })
   }
 
   ongoproducts() {
@@ -29,7 +36,6 @@ export class NavBarComponent implements OnInit {
           this.router.navigate(['/products', res[0].pid], {
             queryParams: { cr: res[0].canReturn }
           })
-
         }
       })
   }
@@ -52,7 +58,7 @@ export class NavBarComponent implements OnInit {
 
   }
 
-  onLogOut(){
+  onLogOut() {
     this.authservie.LogOut()
     this.router.navigate([''])
 

@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ILogin, ISingIn } from '../model/auth';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   auth_Base_Url: string = environment.authBaseUrl
+  isLoging$ : Subject<string> = new Subject<string>();
 
   constructor(private _http: HttpClient) { }
 
@@ -27,11 +28,11 @@ export class AuthService {
   saveuserRole(userRole: string) {
     localStorage.setItem('userRole', userRole)
   }
-  getToken() {
-    localStorage.getItem('token')
+  getToken(): string | null {
+    return localStorage.getItem('token')
   }
-  getUserRole() {
-    localStorage.getItem('userRole')
+  getUserRole(): string | null {
+    return localStorage.getItem('userRole')
   }
 
   LogOut() {

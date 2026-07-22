@@ -10,7 +10,7 @@ export class UserService {
 
   UsersDetails: Array<Iuser> = [
     {
-      userName: 'Rohit Yewale',
+      userName: 'Sanika Patil',
       userId: 'EMP101',
       userRole: 'Candidate',
       profileDescription: '3 years of experience in Angular development.',

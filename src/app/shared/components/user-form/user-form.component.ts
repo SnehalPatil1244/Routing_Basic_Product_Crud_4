@@ -13,7 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class UserFormComponent implements OnInit {
   userForm !: FormGroup
   isinEditMode: boolean = false
-  edituser !: Iuser
+  edituser ?: Iuser
   UserId !: string
 
   constructor(private userservice: UserService,
@@ -53,7 +53,7 @@ export class UserFormComponent implements OnInit {
           this.formcontrols['address'].get('permanent')?.patchValue(CurrentAdd)
           this.formcontrols['address'].get('permanent')?.disable()
         } else if (this.isinEditMode && !val) {
-          this.formcontrols['address'].get('permanent')?.patchValue(this.edituser.address.permanent)
+          this.formcontrols['address'].get('permanent')?.patchValue(this.edituser?.address.permanent)
           this.formcontrols['address'].get('permanent')?.enable()
         }
         else {
@@ -116,7 +116,7 @@ export class UserFormComponent implements OnInit {
         .subscribe({
           next: res => {
             this.snackbar.opensnackbar(res.msg)
-            this.router.navigate(['/users',res.data.userId])
+            this.router.navigate(['/users', res.data.userId])
           },
           error: err => {
             console.log(err);
@@ -134,13 +134,16 @@ export class UserFormComponent implements OnInit {
         next: res => {
           this.edituser = res
           this.isinEditMode = true
-          this, this.userForm.patchValue(this.edituser)
+          this.userForm.patchValue(this.edituser)
           if (res.userRole === 'Candidate') {
             this.userForm.disable()
           }
           this.skillsArr.clear()
           this.edituser.skills.forEach(ele => {
-            let control = new FormControl(ele)
+            let control = new FormControl({
+              value: ele,
+              disabled: res.userRole === 'Candidate'
+            })
             this.skillsArr.push(control)
           })
         }
@@ -158,7 +161,7 @@ export class UserFormComponent implements OnInit {
           next: res => {
             this.snackbar.opensnackbar(res.msg)
             this.userservice.fetchusers().subscribe({})
-            this.router.navigate(['/users',res.data.userId])
+            this.router.navigate(['/users', res.data.userId])
           },
           error: err => {
             console.log(err);
@@ -166,6 +169,18 @@ export class UserFormComponent implements OnInit {
           }
         })
     }
+
+  }
+
+  onremoveskills(i: number) {
+    this.skillsArr.removeAt(i)
+  }
+
+  canDeactivate(): boolean {
+    if (this.userForm.dirty && this.isinEditMode) {
+      return confirm(`Are You Sure You Want To Discard The Changes !!`)
+    }
+    return true
 
   }
 

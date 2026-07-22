@@ -5,6 +5,7 @@ import { ProductService } from '../../services/product.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { GetConfirmationComponent } from '../get-confirmation/get-confirmation.component';
+import { tick } from '@angular/core/testing';
 
 @Component({
   selector: 'app-products',
@@ -20,24 +21,29 @@ export class ProductsComponent implements OnInit {
     private snackbar: SnackbarService,
     private matdialog: MatDialog
 
-  ) { }
+  ) {
+    this.Routes.data.subscribe(res => {
+      this.productobj = res['products']
+      this.productId = res['products'].pid
+    })
+  }
 
   ngOnInit(): void {
-    this.getproducts()
+    // this.getproducts()
   }
 
   getproducts() {
-    this.Routes.params.subscribe(param => {
-      this.productId = param['productId']
-      if (this.productId) {
-        this.productservice.fetchproductById(this.productId)
-          .subscribe({
-            next: data => {
-              this.productobj = data
-            }
-          })
-      }
-    })
+    // this.Routes.params.subscribe(param => {
+    //   this.productId = param['productId']
+    //   if (this.productId) {
+    //     this.productservice.fetchproductById(this.productId)
+    //       .subscribe({
+    //         next: data => {
+    //           this.productobj = data
+    //         }
+    //       })
+    //   }
+    // })
   }
 
   redirectToEdit() {

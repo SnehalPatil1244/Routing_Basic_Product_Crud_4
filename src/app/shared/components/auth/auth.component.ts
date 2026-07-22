@@ -57,6 +57,7 @@ export class AuthComponent implements OnInit {
           this.snackbar.opensnackbar(res.message)
           this.authservice.saveToken(res.token)
           this.authservice.saveuserRole(res.userRole)
+          this.authservice.isLoging$.next(res.userRole)
           this.router.navigate(['/home'])
         },
         error: err => {
