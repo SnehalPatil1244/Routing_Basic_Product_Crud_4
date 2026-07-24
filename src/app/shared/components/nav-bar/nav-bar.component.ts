@@ -16,7 +16,7 @@ export class NavBarComponent implements OnInit {
     private userservice: UserService,
     private fairsservice: FairsService,
     private authservie: AuthService,
-    private router: Router
+    public router: Router
   ) { }
 
   ngOnInit(): void {
